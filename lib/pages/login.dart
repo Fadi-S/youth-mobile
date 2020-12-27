@@ -60,11 +60,11 @@ class _LoginPageState extends State<LoginPage> {
     }
     var userJSON = jsonDecode(response.body);
 
-    User user = User.getInstance(userJSON);
+    Provider.of<User>(context, listen: false).setUserTo(userJSON);
 
-    Provider.of<Cache>(context, listen: false).setJSON('user', userJSON);
+    Provider.of<Cache>(context, listen: false).setJSON(User.KEY, userJSON);
 
-    Provider.of<User>(context, listen: false);
+    Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 
     _respond();
   }

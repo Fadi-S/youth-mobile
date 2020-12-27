@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:youth_app/pages/login.dart';
+import 'package:youth_app/utils/Cache.dart';
 import 'package:youth_app/utils/Request.dart';
 import 'package:youth_app/utils/User.dart';
 import 'package:youth_app/widget/fancy_button.dart';
@@ -79,9 +81,13 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    User user = User.getInstance(jsonDecode(response.body));
+    var userJSON = jsonDecode(response.body);
 
-    print(user);
+    Provider.of<User>(context, listen: false).setUserTo(userJSON);
+
+    Provider.of<Cache>(context, listen: false).setJSON(User.KEY, userJSON);
+
+    Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 
     _respond();
   }

@@ -32,7 +32,7 @@ class Cache {
   String getString(String key) => _instance.getString(key);
   Future<bool> setString(String key, String value) => _instance.setString(key, value);
 
-  Iterable getJSON(String key) {
+  dynamic getJSON(String key) {
     if(!_instance.containsKey(key))
       return null;
 

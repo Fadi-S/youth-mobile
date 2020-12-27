@@ -9,14 +9,25 @@ class Request {
   static final String domain = "youth.alsharobim.com";
   static final String fullUrl = "https://" + domain + "/api";
   String url;
+  String token;
 
-  Request(String url) {
+  var headers;
+
+  Request(String url, {String token}) {
     this.url = url;
+
+    this.token = token;
+
+    this.headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+    };
+
+    if(this.token != null)
+      this.headers[HttpHeaders.authorizationHeader] = "Bearer " + this.token;
   }
 
-  String getFullUrl() {
-    return fullUrl + this.url;
-  }
+  String getFullUrl() => fullUrl + this.url;
 
   static Future<String> responseFromStreamed(http.StreamedResponse response) async {
     String responseString = await response.stream.transform(utf8.decoder).join();
@@ -26,21 +37,22 @@ class Request {
   Future<http.Response> post(Map<String, String> params) async {
     var client = http.Client();
 
-
-    return client.post(fullUrl + url, body: jsonEncode(params), headers: {"Content-type": "application/json", "Accept": "application/json"}).whenComplete(client.close);
+    return client.post(fullUrl + url, body: jsonEncode(params), headers: this.headers).whenComplete(client.close);
   }
 
-  Future<http.Response> get(Map<String, String> params) async {
+  Future<http.Response> get({Map<String, String> params}) async {
     var client = http.Client();
 
     String strParams = "";
-    params.forEach((String key, String value) {
-      if(key == null) return;
-      if(value == null) return;
-      strParams += key + "=" + value + "&";
-    });
 
-    return client.get(fullUrl + url + "?" + strParams, headers: {"Content-type": "application/json", "Accept": "application/json"})
+    if(params != null)
+      params.forEach((String key, String value) {
+        if(key == null) return;
+        if(value == null) return;
+        strParams += key + "=" + value + "&";
+      });
+
+    return client.get(fullUrl + url + "?" + strParams, headers: this.headers)
         .whenComplete(client.close);
   }
 
