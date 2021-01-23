@@ -5,16 +5,18 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:youth_app/pages/home.dart';
 import 'package:youth_app/pages/register.dart';
 import 'package:youth_app/utils/Cache.dart';
 import 'package:youth_app/utils/Request.dart';
-import 'package:youth_app/utils/User.dart';
+import 'package:youth_app/data/User.dart';
 import 'package:youth_app/widget/fancy_button.dart';
 import 'package:youth_app/widget/fancy_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
 
+  static const String ROUTE = "/login";
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -64,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
 
     Provider.of<Cache>(context, listen: false).setJSON(User.KEY, userJSON);
 
-    Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(HomePage.ROUTE, (Route<dynamic> route) => false);
 
     _respond();
   }

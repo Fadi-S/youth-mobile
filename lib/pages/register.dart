@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:youth_app/pages/login.dart';
 import 'package:youth_app/utils/Cache.dart';
 import 'package:youth_app/utils/Request.dart';
-import 'package:youth_app/utils/User.dart';
+import 'file:///F:/Projects/youth_app/lib/data/User.dart';
 import 'package:youth_app/widget/fancy_button.dart';
 import 'package:youth_app/widget/fancy_text_field.dart';
 

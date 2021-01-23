@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_app/pages/home.dart';
 import 'package:youth_app/pages/login.dart';
+import 'package:youth_app/pages/task.dart';
 import 'package:youth_app/utils/Cache.dart';
 import 'package:youth_app/utils/Request.dart';
-import 'package:youth_app/utils/User.dart';
+import 'package:youth_app/data/User.dart';
 import 'package:http/http.dart' as http;
 
 void main() async {
@@ -52,12 +53,14 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Youth Meeting',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        backgroundColor: Color.fromRGBO(139, 186, 106, 0.8),
       ),
       routes: <String, WidgetBuilder> {
-        '/login': (BuildContext context) => LoginPage(),
-        '/home': (BuildContext context) => HomePage(),
+        LoginPage.ROUTE: (BuildContext context) => LoginPage(),
+        HomePage.ROUTE: (BuildContext context) => HomePage(),
+        TaskPage.ROUTE: (BuildContext context) => TaskPage(),
       },
       home: Provider.of<User>(context).empty ? LoginPage() : HomePage(),
     );

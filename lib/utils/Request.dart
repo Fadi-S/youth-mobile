@@ -34,7 +34,9 @@ class Request {
     return responseString;
   }
 
-  Future<http.Response> post(Map<String, String> params) async {
+  Future<http.Response> post([Map<String, String> params]) async {
+    params = params ?? {};
+
     var client = http.Client();
 
     return client.post(fullUrl + url, body: jsonEncode(params), headers: this.headers).whenComplete(client.close);
